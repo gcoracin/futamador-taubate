@@ -1,0 +1,91 @@
+{% extends 'campeonato/base.html' %}
+
+{% block content %}
+
+    {% if fase_selecionada %}
+        
+        {% for grupo in grupos_de_partidas %}
+            
+            <h2 class="mb-3 text-center">{{ grupo.nome_fase }}</h2>
+
+            {% for partida in grupo.partidas %}
+                <div class="card mb-3 shadow-sm">
+                    <div class="card-body text-center">
+                        <h5 class="card-title d-flex justify-content-center align-items-center">
+                            <span class="col">{{ partida.time_casa.nome }}</span>
+                            
+                            {% if partida.partida_realizada %}
+                                <span class="badge bg-dark fs-4 mx-4">{{ partida.gols_time_casa }} x {{ partida.gols_time_visitante }}</span>
+                            {% else %}
+                                <span class="mx-4">vs</span>
+                            {% endif %}
+                            
+                            <span class="col">{{ partida.time_visitante.nome }}</span>
+                        </h5>
+                        <p class="card-text text-muted mt-3">
+                            {{ partida.data_partida|date:"d/m, H:i" }}h | {{ partida.local }}
+                        </p>
+                    </div>
+                </div>
+            {% endfor %} 
+            
+        {% empty %}
+            <div class="alert alert-info" role="alert">
+                Nenhuma partida encontrada para a fase "{{ fase_selecionada }}".
+            </div>
+        {% endfor %}
+
+
+    {% else %}
+        
+        <h2 class="mb-3 text-center">Classificação</h2>
+
+        <div class="card shadow-sm">
+            <div class="table-responsive">
+                <table class="table table-striped table-hover mb-0">
+                    <thead class="table-dark">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Time</th>
+                            <th scope="col">P</th>
+                            <th scope="col">J</th>
+                            <th scope="col">V</th>
+                            <th scope="col">E</th>
+                            <th scope="col">D</th>
+                            <th scope="col">GP</th>
+                            <th scope="col">GC</th>
+                            <th scope="col">SG</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in classificacao %}
+                        <tr>
+                            <th scope="row">{{ forloop.counter }}</th>
+                            <td>{{ item.time.nome }}</td>
+                            <td><strong>{{ item.P }}</strong></td>
+                            <td>{{ item.J }}</td>
+                            <td>{{ item.V }}</td>
+                            <td>{{ item.E }}</td>
+                            <td>{{ item.D }}</td>
+                            <td>{{ item.GP }}</td>
+                            <td>{{ item.GC }}</td>
+                            <td>{{ item.SG }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="10" class="text-center p-4">
+                                Nenhum dado para a classificação ainda. 
+                                <br>
+                                <small>Cadastre os resultados das partidas no painel de admin.</small>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+    {% endif %}
+
+{% endblock %}
+
