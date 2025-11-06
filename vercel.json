@@ -3,18 +3,17 @@
     {
       "src": "futamador/wsgi.py",
       "use": "@vercel/python",
-      "config": { "runtime": "python3.11" }
-    },
-    {
-      "src": "staticfiles_build.sh",
-      "use": "@vercel/static-build",
-      "config": { "distDir": "staticfiles" }
+      "config": {
+        "runtime": "python3.11",
+        "maxLambdaSize": "15mb",
+        "buildCommand": "python manage.py collectstatic --noinput --clear"
+      }
     }
   ],
   "routes": [
     {
       "src": "/static/(.*)",
-      "dest": "/staticfiles/(.*)"
+      "dest": "/staticfiles/$1"
     },
     {
       "src": "/(.*)",
