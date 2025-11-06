@@ -25,9 +25,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-!!*oq1iz6ol&#8*n%u@9-f0mda@u@3lubrz*@ko!%4kco8dpa#'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['gcoracin.pythonanywhere.com', '127.0.0.1']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -124,4 +124,5 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+# Isso diz ao Django para colocar os arquivos estáticos em uma pasta que o Vercel entende
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_build', 'static')

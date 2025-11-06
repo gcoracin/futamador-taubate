@@ -1,0 +1,24 @@
+{
+  "builds": [
+    {
+      "src": "futamador/wsgi.py",
+      "use": "@vercel/python",
+      "config": { "runtime": "python3.11" }
+    },
+    {
+      "src": "staticfiles_build.sh",
+      "use": "@vercel/static-build",
+      "config": { "distDir": "staticfiles_build" }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/static/(.*)",
+      "dest": "/staticfiles_build/static/(.*)"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "futamador/wsgi.py"
+    }
+  ]
+}
